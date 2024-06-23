@@ -1,0 +1,71 @@
+﻿@using bookingflightmvcUI.Models.DTOs
+@model FlightDTO
+@{
+    Layout = "_AdminLayout";
+  
+}
+
+<div style="width:50%">
+    <h2> Update Flight </h2>
+    <a asp-action="Index" asp-controller="Flight" class="btn btn-primary">Back</a>
+    <form asp-action="UpdateFlight" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Image" />
+
+        <div class="my-2">
+            <label>Flight Name*</label>
+            <input type="text" class="form-control" asp-for="FlightName" />
+            <span asp-validation-for="FlightName" class="text-danger"></span>
+        </div>
+
+
+
+        <div class="my-2">
+            <label>Airport*</label>
+            <select class="form-control" asp-for="AirportId" asp-items="Model.AirportList">
+                <option value="">Select Genre</option>
+            </select>
+            <span asp-validation-for="AirportId" class="text-danger"></span>
+        </div>
+
+        <div class="my-2">
+            <label>Price*</label>
+            <input type="number" class="form-control" asp-for="Price" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="my-2">
+            <label>departureTime</label>
+            <input type="datetime-local" class="form-control" asp-for="departureTime" />
+            <span asp-validation-for="departureTime" class="text-danger"></span>
+        </div>
+        <div class="my-2">
+            <label>arrivalTime</label>
+            <input type="datetime-local" class="form-control" asp-for="arrivalTime" />
+            <span asp-validation-for="arrivalTime" class="text-danger"></span>
+        </div>
+        <div class="my-2">
+            <label>duration</label>
+            <input type="text" class="form-control" asp-for="duration" />
+            <span asp-validation-for="duration" class="text-danger"></span>
+
+        </div>
+        <div class="my-2">
+            <label>numberOfStops</label>
+            <input type="number" class="form-control" asp-for="numberOfStops" />
+            <span asp-validation-for="numberOfStops" class="text-danger"></span>
+        </div>
+        <div class="my-2">
+            <label>Image</label>
+            @if (!string.IsNullOrEmpty(Model.Image))
+            {
+                <img src="/images/@Model.Image" style="width:100px;height:80px" />
+            }
+            <input type="file" class="form-control" asp-for="ImageFile" />
+        </div>
+
+        <div class="my-2">
+            <button type="submit" class="btn btn-info">Update</button>
+        </div>
+    </form>
+</div>
+

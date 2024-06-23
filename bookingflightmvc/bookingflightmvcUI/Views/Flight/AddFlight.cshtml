@@ -1,0 +1,57 @@
+﻿@using bookingflightmvcUI.Models.DTOs
+@model FlightDTO
+@{
+    Layout = "_AdminLayout";
+ 
+}
+
+<div style="width:50%">
+    <h2> Add Flight </h2>
+    <a asp-action="Index" asp-controller="Flight" class="btn btn-primary">Back</a>
+    <form asp-action="AddFlight" enctype="multipart/form-data">
+        @* <input type="hidden" asp-for="Id" /> *@
+
+        <div class="my-2">
+            <label>Book*</label>
+            <input type="text" class="form-control" asp-for="FlightName" />
+            <span asp-validation-for="FlightName" class="text-danger"></span>
+        </div>
+        <div class="my-2">
+            <label>Genre*</label>
+            <select class="form-control" asp-for="AirportId" asp-items="Model.AirportList">
+                <option value="">Select Genre</option>
+            </select>
+            <span asp-validation-for="AirportId" class="text-danger"></span>
+        </div>
+        <div class="my-2">
+            <label>Price*</label>
+            <input type="number" class="form-control" asp-for="Price" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="my-2">
+            <label>Image</label>
+            <input type="file" class="form-control" asp-for="ImageFile" />
+        </div>
+        <div class="my-2">
+            <label>departureTime</label>
+            <input type="datetime-local" class="form-control" asp-for="departureTime" />
+        </div>
+        <div class="my-2">
+            <label>arrivalTime</label>
+            <input type="datetime-local" class="form-control" asp-for="arrivalTime" />
+        </div>
+        <div class="my-2">
+            <label>duration</label>
+            <input type="text" class="form-control" asp-for="duration" />
+        </div>
+        <div class="my-2">
+            <label>numberOfStops</label>
+            <input type="number" class="form-control" asp-for="numberOfStops" />
+        </div>
+        <div class="my-2">
+            <button type="submit" class="btn btn-info">Add</button>
+        </div>
+    </form>
+</div>
+
+

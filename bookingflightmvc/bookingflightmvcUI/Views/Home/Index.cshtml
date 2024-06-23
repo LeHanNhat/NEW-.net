@@ -1,0 +1,119 @@
+﻿@using bookingflightmvcUI.Models.DTOs
+@model FlightDisplayModel
+@{
+
+}
+<div class="my-2">
+    <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <label class="visually-hidden" for="airportId">Airport</label>
+            <select class="form-select" id="airportId" name="airportId">
+                <option selected>Genre</option>
+                @foreach (var genre in Model.Airports)
+                {
+                    <option selected="@(genre.Id == Model.AirportId)" value="@genre.Id">@genre.AirportName</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-12">
+            <label class="visually-hidden" for="sterm">Search by title</label>
+            <div class="input-group">
+                <div class="input-group-text"></div>
+                <input type="text" class="form-control" value="@Model.STerm" id="sterm" name="sterm" placeholder="Search by title">
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a href="/Home/Index" class="btn btn-dark">Reset</a>
+        </div>
+    </form>
+</div>
+
+<div class="w-100 mt-4 d-flex flex-wrap ">
+    @if (Model.Flights?.Count() > 0)
+    {
+        <table class="table table-striped my-2">
+            <tr>
+                <th>Image</th>
+                <th>FlightName</th>
+                <th>Price</th>
+                <th>Airport</th>
+                <th>Departure time</th>
+                <th>Arrival Time</th>
+                <th>Duration</th>
+                <th>Number of stop</th>
+                <th>Action</th>
+            </tr>
+
+            @foreach (var book in Model.Flights)
+            {
+                <tr>
+                    <td>
+                        @if (string.IsNullOrWhiteSpace(book.Image))
+                        {
+                            <img src="/Images/NoImage.png" style="width:80px;height:100px" alt="book image" />
+                        }
+                        else
+                        {
+                            <img src="/images/@book.Image" style="width:80px;height:100px" alt="book image" />
+                        }
+                    </td>
+                    <td>@book.FlightName</td>
+
+                    <td>@book.ticketPrice</td>
+                    <td>@book.AirportName</td>
+                    <td>@book.departureTime</td>
+                    <td>@book.arrivalTime</td>
+                    <td>@book.duration</td>
+                    <td>@book.numberOfStops</td>
+
+                    <td>
+                        @if (book.Quantity > 0)
+                        {
+                            <button type="button" onclick="add(@book.Id)" class="btn btn-primary">Add to cart</button>
+                        }
+                        else
+                        {
+                            <span style="border: 1px solid;padding: 5px 8px;color: red;border-radius: 5px;">Out of stock</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <h3>No records</h3>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        async function add(bookId) {
+            var usernameEl = document.getElementById("username");
+            if (usernameEl == null) {
+                window.location.href = "/Identity/Account/Login";
+                //var username=usernameEl.innerText;
+                //  if(username.length<1){
+                //      window.location.href="/Identity/Account/Login";
+                //  }
+            }
+            try {
+                var response = await fetch(`/Cart/AddItem?bookId=${bookId}`);
+                if (response.status == 200) {
+                    var result = await response.json();
+                    var cartCountEl = document.getElementById("cartCount");
+                    cartCountEl.innerHTML = result;
+                    window.location.href = "#cartCount";
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+    </script>
+}
+
+

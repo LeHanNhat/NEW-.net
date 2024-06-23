@@ -1,0 +1,26 @@
+﻿@using bookingflightmvcUI.Models.DTOs
+@model AirportDTO
+@{
+
+    Layout = "_AdminLayout";
+}
+
+<div style="width:50%">
+    <h2> Add Airport </h2>
+    <a asp-action="Index" asp-controller="Airport" class="btn btn-primary">Back</a>
+    <form asp-action="AddAirport">
+        @* <input type="hidden" asp-for="Id" /> *@
+
+        <div class="my-2">
+            <label>Airport</label>
+            <input type="text" class="form-control" asp-for="AirportName" />
+            <span asp-validation-for="AirportName" class="text-danger"></span>
+        </div>
+
+        <div class="my-2">
+            <button type="submit" class="btn btn-info">Add</button>
+        </div>
+    </form>
+</div>
+
+

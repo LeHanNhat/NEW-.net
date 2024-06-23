@@ -1,0 +1,63 @@
+﻿@using bookingflightmvcUI.Models.DTOs
+@model IEnumerable<Flight>
+@{
+    Layout = "_AdminLayout";
+}
+
+<h2>Books</h2>
+
+<a asp-action="AddFlight" asp-controller="Flight" class="btn btn-primary">Add More</a>
+
+
+@if (Model?.Count() > 0)
+{
+    <table class="table table-striped my-2">
+        <tr>
+            <th>Image</th>
+            <th>FlightName</th>
+            <th>Price</th>
+            <th>Airport</th>
+            <th>Departure time</th>
+            <th>Arrival Time</th>
+            <th>Duration</th>
+            <th>Number of stop</th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>
+                    @if (string.IsNullOrWhiteSpace(book.Image))
+                    {
+                        <img src="/Images/NoImage.png" style="width:80px;height:100px" alt="book image" />
+                    }
+                    else
+                    {
+                        <img src="/images/@book.Image" style="width:80px;height:100px" alt="book image" />
+                    }
+                </td>
+                <td>@book.FlightName</td>
+
+                <td>@book.ticketPrice</td>
+                <td>@book.AirportName</td>
+                <td>@book.departureTime</td>
+                <td>@book.arrivalTime</td>
+                <td>@book.duration</td>
+                <td>@book.numberOfStops</td>
+
+                <td>
+                    <a asp-action="UpdateFlight" asp-controller="Flight" asp-route-id="@book.Id" class="btn btn-success">Edit</a>
+                    <a asp-action="DeleteFlight" asp-controller="Flight" asp-route-id="@book.Id" class="btn btn-danger" onclick="return window.confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h3>No records</h3>
+}
+
+
+
